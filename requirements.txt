@@ -1,21 +1,57 @@
+# ---------------------------------------------------
+# Dependencias principales del proyecto (versión mínima)
+# ---------------------------------------------------
 requests==2.32.3
 pandas>=2.2.0
-playwright>=1.47.0
-# Opcional (mejor rendimiento en IO de datos)
 pyarrow>=17.0.0
-# Para análisis y visualización en ordenamiento
+
+# Navegación / scraping (Playwright requiere instalación adicional en Docker)
+playwright>=1.47.0
+playwright-stealth>=1.0.5
+
+# Análisis y visualización
 numpy>=1.26.0
 matplotlib>=3.8.0
 seaborn>=0.13.0
-pywebview>=4.0.0
-playwright-stealth>=1.0.5
+wordcloud>=1.8.2
+pycountry>=22.3.5
+folium>=0.14.0
+plotly>=5.16.0
 
-# IA - Similitud de textos (Modelos de lenguaje)
+# GUI local (no necesario en servidor; si el proyecto se ejecuta localmente lo mantenemos)
+# Nota: pywebview no es útil en un servidor web en Railway (es GUI de escritorio).
+pywebview>=4.0.0
+
+# IA - Similitud de textos (Sentence-BERT)
 sentence-transformers>=2.7.0
 transformers>=4.44.0
-# PyTorch CPU (para embeddings y modelos HF/SBERT)
+
+# PyTorch: PUEDE AUMENTAR MUCHO EL TAMAÑO DE LA IMAGEN. Considera alternativas.
+# Si Railway rechaza la imagen por peso, usar precomputado de embeddings o una imagen Docker personalizada.
 torch>=2.2.0
 
-# Clustering jerárquico y TF-IDF
+# Clustering y TF-IDF
 scikit-learn>=1.3.0
 scipy>=1.11.0
+
+# Similitud rápida (opcional / recomendado)
+rapidfuzz>=2.15.1
+
+# Análisis de redes (citaciones)
+networkx>=3.2
+
+# Servidor / API para Railway
+fastapi>=0.98.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+
+# Extras para manejo de PDFs / reportes
+reportlab>=3.6.15
+
+# Dependencias para playwright y builds
+# (nota: estas no son pip; se instalan en Docker con apt-get o playwright install)
+# apt packages: libnss3, libatk1.0-0, libatk-bridge2.0-0, libgtk-3-0, libx11-xcb1, libxcomposite1, libxdamage1, libxrandr2
+
+# ---------------------------------------------------
+# Fin del requirements
+# ---------------------------------------------------

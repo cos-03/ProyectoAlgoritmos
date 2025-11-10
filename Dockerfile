@@ -1,26 +1,29 @@
-# Dockerfile ligero para Railway (build rápido)
+# Dockerfile (recomendado para Render)
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Evitar prompts apt
+ENV DEBIAN_FRONTEND=noninteractive
+
 WORKDIR /app
 
-# Dependencias del sistema mínimas
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential curl git ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+# copia requisitos (puedes usar requirements.txt o requirements_light.txt)
+COPY requirements.txt /app/requirements.txt
 
-# Copiar fichero de dependencias ligero
-COPY requirements_railway.txt /app/requirements.txt
+# pequeños ajustes para builds reproducibles
+RUN apt-get update \
+  && apt-get install -y build-essential curl git libglib2.0-0 libnss3 libgconf-2-4 libxss1 libxtst6 \
+  && pip install --upgrade pip setuptools wheel \
+  && pip install -r /app/requirements.txt \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-# Copiar el proyecto
+# copia todo el proyecto
 COPY . /app
 
-# Crear carpeta de outputs
+# directorio de salida
 RUN mkdir -p /app/outputs
 
+# Exponer puerto (nota: Render sobrescribirá con $PORT)
 EXPOSE 8000
-CMD ["uvicorn", "main_fastapi:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# CMD usando la variable PORT (Render exporta $PORT)
+CMD ["sh", "-lc", "uvicorn main_fastapi:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --timeout-keep-alive 120"]

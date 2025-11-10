@@ -51,6 +51,7 @@ reportlab>=3.6.15
 # Dependencias para playwright y builds
 # (nota: estas no son pip; se instalan en Docker con apt-get o playwright install)
 # apt packages: libnss3, libatk1.0-0, libatk-bridge2.0-0, libgtk-3-0, libx11-xcb1, libxcomposite1, libxdamage1, libxrandr2
+gunicorn==21.2.0
 
 # ---------------------------------------------------
 # Fin del requirements

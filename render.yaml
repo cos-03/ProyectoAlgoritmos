@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: proyecto-algoritmos
-    env: docker            # o "python" si no usas Docker
-    branch: main
+    name: ProyectoAlgoritmosBiblioteca
+    env: docker
+    region: oregon
+    branch: principal
     dockerfilePath: ./Dockerfile
+    buildContext: .
+    healthCheckPath: /health
     plan: free

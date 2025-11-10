@@ -41,3 +41,15 @@ EXPOSE 8000
 
 # CMD por defecto (ajusta el module si tu app está en otro archivo)
 CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "main_fastapi:app", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120"]
+# ... resto del Dockerfile igual ...
+
+# Copiar archivos necesarios
+COPY . /app
+
+# Crear directorios necesarios
+RUN mkdir -p /app/data /app/csv /app/screenshots
+
+# Establecer permisos
+RUN chmod -R 755 /app
+
+# ... resto del Dockerfile igual ...

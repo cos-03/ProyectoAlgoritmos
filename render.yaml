@@ -1,10 +1,9 @@
 services:
   - type: web
-    name: ProyectoAlgoritmosBiblioteca
-    env: docker
-    region: oregon
-    branch: principal
-    dockerfilePath: ./Dockerfile
-    buildContext: .
-    healthCheckPath: /health
-    plan: free
+    name: proyecto-algoritmos
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main_fastapi:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
